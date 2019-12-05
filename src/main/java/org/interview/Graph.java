@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Graph {
@@ -95,10 +97,10 @@ public class Graph {
     private int time;
 
     private Graph(final int size) {
-        this.vertices = new ArrayList<>(size);
-        for (int i = 0; i < size; ++i) {
-            this.vertices.add(new Vertex(i));
-        }
+        this.vertices = IntStream.range(0, size)
+                .boxed()
+                .map(i -> new Vertex(i))
+                .collect(Collectors.toList());
     }
 
     public void addEdge(final int x, final int y) {
