@@ -1,72 +1,16 @@
 package org.interview;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Iterator;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
-public class GenericHashTable<K, V> {
-    static class GenericEntry<K, V> {
-        private K key;
-        private V value;
-
-        GenericEntry(K key, V value) {
-            this.key = key;
-            this.value = value;
-        }
-
-        K getKey() {
-            return key;
-        }
-
-        V getValue() {
-            return value;
-        }
-    }
-
-    private int size = 65536;
-
-    private LinkedList<GenericEntry<K, V>>[] entries;
-
-    private GenericHashTable() {
-        entries = new LinkedList[size];
-    }
-
-    private int hash(K key) {
-        int hashValue = 0;
-        if ((key != null)) {
-            hashValue =  key.hashCode() ^ (hashValue >>> 16);
-            hashValue = hashValue & (size - 1);
-        }
-        return hashValue;
-    }
-
-    V get(K key) {
-        LinkedList<GenericEntry<K, V>> list = entries[hash(key)];
-        if(list != null) {
-            final Iterator<GenericEntry<K, V>> it = list.listIterator();
-            while(it.hasNext()) {
-                GenericEntry<K, V> entry = it.next();
-                if(key.equals(entry.getKey())) {
-                    return entry.getValue();
-                }
-            }
-        }
-        return null;
-    }
-
-    void put(K key, V value) {
-        GenericEntry<K, V> entry = new GenericEntry<>(key, value);
-        int hashCode = hash(key);
-        if(entries[hashCode] == null) {
-            entries[hashCode] = new LinkedList<>();
-        }
-        entries[hashCode].add(entry);
-    }
-
+public class HashMapTest {
     public static void main(String[] args) {
-        GenericHashTable<String, Integer> map = new GenericHashTable<>();
+        Map<String, Integer> map = new HashMap<>();
         final String key = "The";
         String largestWord = null;
         int largest = 0;

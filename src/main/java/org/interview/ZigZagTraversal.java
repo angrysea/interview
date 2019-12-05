@@ -16,7 +16,6 @@ public class ZigZagTraversal {
         }
     }
 
-
     TreeNode rootNode;
 
     private void printZigZagTraversal() {

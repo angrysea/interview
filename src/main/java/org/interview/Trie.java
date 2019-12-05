@@ -1,8 +1,13 @@
 package org.interview;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -16,7 +21,7 @@ class Trie {
         TrieNode() {
             isEndOfWord = false;
             children = new ArrayList<>(ALPHABET_SIZE);
-            IntStream.range(0, ALPHABET_SIZE-1).forEach(n -> children.add(null));
+            IntStream.range(0, ALPHABET_SIZE).forEach(n -> children.add(null));
         }
 
         TrieNode get(final int index) {
@@ -59,17 +64,62 @@ class Trie {
     }
 
     public static void main(String[] args) {
-        final String [] words = {"this", "th", "is", "famous", "word", "break",
-                "b", "r", "e", "a", "k", "br", "bre", "brea", "ak", "problem"};
         Trie dictionary = new Trie();
-        Arrays.stream(words).forEach(dictionary::insert);
+        final String filename = "/Users/graffeoa/workspace/data/kingjames.txt";
+        String largestWord = null;
+        int largest = 0;
 
-        List<Boolean> results = Arrays.stream(words)
-                .map(dictionary::search)
-                .collect(Collectors.toList());
+        var start = Instant.now();
+        try (Scanner scanner = new Scanner(new File(filename))) {
+            int value = 0;
+            while (scanner.hasNext()) {
+                String line = scanner.next();
+                line = line.replaceAll("[^a-zA]", "").toLowerCase();
+                if(!line.isEmpty()) {
+                    try {
+                        if (line.length() > largest) {
+                            largest = line.length();
+                            largestWord = line;
+                        }
+                        dictionary.insert(line);
+                        value++;
+                    }
+                    catch(IndexOutOfBoundsException e) {
+                        System.out.println(line);
+                        System.out.println(e.getMessage());
+                    }
+                }
+            }
+            System.out.println("Number of words stored: " + value);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        var finish = Instant.now();
+        var timeElapsed = Duration.between(start, finish).toMillis();
+        System.out.println("Milli seconds to load book: " + timeElapsed);
 
-        results.add(dictionary.search("abscent"));
+        start = Instant.now();
+        System.out.println("Key's: David value is " + dictionary.search("david"));
+        finish = Instant.now();
+        timeElapsed = Duration.between(start, finish).toNanos();
+        System.out.println("Nanos seconds to find: " + timeElapsed);
 
-        results.forEach(System.out::println);
+        start = Instant.now();
+        System.out.println("Key's: Lion value is " + dictionary.search("lion"));
+        finish = Instant.now();
+        timeElapsed = Duration.between(start, finish).toNanos();
+        System.out.println("Nanos seconds to find: " + timeElapsed);
+
+        start = Instant.now();
+        System.out.println("Key's: heaven value is " + dictionary.search("heaven"));
+        finish = Instant.now();
+        timeElapsed = Duration.between(start, finish).toNanos();
+        System.out.println("Nanos seconds to find: " + timeElapsed);
+
+        start = Instant.now();
+        System.out.println("Key's: " + largestWord + " value is " + dictionary.search(largestWord));
+        finish = Instant.now();
+        timeElapsed = Duration.between(start, finish).toNanos();
+        System.out.println("Nanos seconds to find: " + timeElapsed);
     }
 }
