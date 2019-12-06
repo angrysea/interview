@@ -87,6 +87,10 @@ public class MinHeap {
         return heap[0];
     }
 
+    boolean isEmpty() {
+        return size ==0;
+    }
+
     public int poll() {
         if (size == 0) {
             throw new IllegalStateException("Heap is empty");
@@ -110,7 +114,9 @@ public class MinHeap {
         MinHeap minHeap = new MinHeap();
 
         Arrays.stream(array).forEach(minHeap::add);
-
+        while(!minHeap.isEmpty()) {
+            System.out.println(minHeap.poll());
+        }
 
     }
 

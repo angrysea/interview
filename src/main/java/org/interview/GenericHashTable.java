@@ -23,9 +23,13 @@ public class GenericHashTable<K, V> {
         V getValue() {
             return value;
         }
+
+        public void setValue(V value) {
+            this.value = value;
+        }
     }
 
-    private int size = 65536;
+    private int size = (int)Math.round(Math.pow(2, 9));
 
     private LinkedList<GenericEntry<K, V>>[] entries;
 
@@ -57,11 +61,21 @@ public class GenericHashTable<K, V> {
     }
 
     void put(K key, V value) {
-        GenericEntry<K, V> entry = new GenericEntry<>(key, value);
         int hashCode = hash(key);
         if(entries[hashCode] == null) {
             entries[hashCode] = new LinkedList<>();
         }
+
+        final Iterator<GenericEntry<K, V>> it = entries[hashCode].listIterator();
+        while(it.hasNext()) {
+            GenericEntry<K, V> entry = it.next();
+            if(key.equals(entry.getKey())) {
+                entry.setValue(value);
+                return;
+            }
+        }
+
+        GenericEntry<K, V> entry = new GenericEntry<>(key, value);
         entries[hashCode].add(entry);
     }
 

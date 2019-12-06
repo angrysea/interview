@@ -4,24 +4,26 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
 
 class Trie {
 
     static class TrieNode {
-        static final int ALPHABET_SIZE = 26;
+        static final int ALPHABET_SIZE = 'z' - 'a' + 1;
         final List<TrieNode> children;
         boolean isEndOfWord;
 
         TrieNode() {
             isEndOfWord = false;
-            children = new ArrayList<>(ALPHABET_SIZE);
-            IntStream.range(0, ALPHABET_SIZE).forEach(n -> children.add(null));
+            Supplier<TrieNode> getNull = () -> null;
+            children = Stream.generate(getNull)
+                    .limit(ALPHABET_SIZE)
+                    .collect(Collectors.toList());
         }
 
         TrieNode get(final int index) {
@@ -66,7 +68,7 @@ class Trie {
     public static void main(String[] args) {
         Trie dictionary = new Trie();
         final String filename = "/Users/graffeoa/workspace/data/kingjames.txt";
-        String largestWord = null;
+        String largestWord = "";
         int largest = 0;
 
         var start = Instant.now();
