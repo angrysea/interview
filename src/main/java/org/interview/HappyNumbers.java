@@ -5,32 +5,29 @@ import java.util.Set;
 
 public class HappyNumbers {
 
-    boolean isHappy(int in){
-        int num = in;
-        boolean bIsHappy = false;
+    boolean isHappy(int n){
         Set<Integer> foundNumbers = new HashSet<>();
-        while(!foundNumbers.contains(num)){
-            foundNumbers.add(num);
-            int squareSum = 0;
-            while(num != 0){
-                squareSum += Math.pow(num%10, 2);
-                num = num/10;
+        int num = n;
+        while(num != 1) {
+            int current = num, sum = 0;
+            while(current != 0) {
+                int mod10 = current % 10;
+                sum += Math.pow(mod10, 2);
+                current /= 10;
             }
-            num = squareSum;
-            if(num == 1){// If found the square sum to be 1
-                System.out.println("Is a happy number: " + in + " result: " + num);
-                bIsHappy = true;
-                break;
+
+            if(foundNumbers.contains(sum)) {
+                return false;
             }
-        }
-        if(!bIsHappy) {
-            System.out.println("Is a unHappy number: " + in + " result: " + num);
+            foundNumbers.add(sum);
+            num = sum;
         }
 
-        return bIsHappy;
+        System.out.println("Is a unHappy number: " + n + " result: " + num);
+        return true;
     }
 
     public static void main(String[] args) {
-        new HappyNumbers().isHappy(32);
+        new HappyNumbers().isHappy(19);
     }
 }

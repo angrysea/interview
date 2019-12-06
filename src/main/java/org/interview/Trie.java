@@ -1,14 +1,9 @@
 package org.interview;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-import java.util.function.BiFunction;
-import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 
@@ -16,31 +11,20 @@ class Trie {
 
     static class TrieNode {
 
-        static class Crawler<T, U, R> implements BiFunction<T, U, R> {
-
-            @Override
-            public R apply(T t, U u) {
-                return null;
-            }
-        }
-
-
         static final int ALPHABET_SIZE = 26;
         final List<TrieNode> children;
         boolean isEndOfWord;
 
         TrieNode() {
             isEndOfWord = false;
-            Supplier<TrieNode> getNull = () -> {
-                return null;
-            };
+            Supplier<TrieNode> getNull = () -> null;
             children = Stream.generate(getNull)
                     .limit(ALPHABET_SIZE)
                     .collect(Collectors.toList());
         }
 
-        Optional<TrieNode> get(final int index) {
-            return Optional.of(children.get(index));
+        TrieNode get(final int index) {
+            return children.get(index);
         }
 
         TrieNode has(final int index) {
@@ -73,9 +57,9 @@ class Trie {
 //    }
 
     boolean search(final String word) {
-        Optional<TrieNode> crawler = Optional.of(root);
+        TrieNode crawler = root;
         for (char c : word.toCharArray()) {
-            crawler = crawler.ifPresentOrElse(n -> n.get(c - 'a'), return false);
+            crawler = crawler.get(c - 'a');
             if (crawler == null) {
                 return false;
             }
