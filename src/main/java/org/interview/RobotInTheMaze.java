@@ -60,7 +60,7 @@ public class RobotInTheMaze {
         }
 
         Pair<Integer, Integer> next = new Pair<>(last.getKey() + 1, last.getValue());
-        Stack<Pair<Integer, Integer>> nextRightRoute = new Stack<Pair<Integer, Integer>>();
+        Stack<Pair<Integer, Integer>> nextRightRoute = new Stack<>();
         nextRightRoute.addAll(route);
         nextRightRoute.push(next);
         move(nextRightRoute, routes);

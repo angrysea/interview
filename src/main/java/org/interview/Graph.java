@@ -89,8 +89,6 @@ public class Graph {
             setDistance(0);
             setPredecessor(null);
         }
-
-
     }
 
     private final List<Vertex> vertices;
@@ -99,7 +97,7 @@ public class Graph {
     private Graph(final int size) {
         this.vertices = IntStream.range(0, size)
                 .boxed()
-                .map(i -> new Vertex(i))
+                .map(Vertex::new)
                 .collect(Collectors.toList());
     }
 
@@ -113,6 +111,19 @@ public class Graph {
         } catch (IndexOutOfBoundsException e) {
             return false;
         }
+    }
+
+    private void setVisited(Vertex current, Vertex v, int i) {
+        v.setColor(Vertex.Color.GREY);
+        v.setDistance(i);
+        v.setPredecessor(current);
+    }
+
+    private void resetVertex(Vertex v) {
+        v.setColor(Vertex.Color.WHITE);
+        v.setDiscover(0);
+        v.setFinish(0);
+        v.setPredecessor(null);
     }
 
     private void clearEdge(int x, int y) {
@@ -129,13 +140,7 @@ public class Graph {
     }
 
     private void depthFirstSearchRecursive() {
-        vertices.forEach(v -> {
-            v.setColor(Vertex.Color.WHITE);
-            v.setDiscover(0);
-            v.setFinish(0);
-            v.setPredecessor(null);
-        });
-
+        vertices.forEach(this::resetVertex);
         time = 0;
         vertices.forEach(this::depthFirstSearchVisit);
     }
@@ -156,7 +161,6 @@ public class Graph {
     }
 
     private void depthFirstSearch(final int index) {
-
         vertices.forEach(Vertex::init);
 
         Stack<Vertex> stack = new Stack<>();
@@ -164,36 +168,24 @@ public class Graph {
 
         while (!stack.isEmpty()) {
             Vertex current = stack.pop();
-            if( current.getColor() == Vertex.Color.WHITE) {
+            if(current.getColor() == Vertex.Color.WHITE) {
                 current.setColor(Vertex.Color.GREY);
             }
             current.stream()
                     .filter(v -> v.getColor() == Vertex.Color.WHITE)
-                    .peek(v -> {
-                        v.setColor(Vertex.Color.GREY);
-                        v.setDistance(current.getDistance() + 1);
-                        v.setPredecessor(current);
-                    })
+                    .peek(v -> setVisited(current, v, current.getDistance() + 1))
                     .forEach(stack::push);
             current.setColor(Vertex.Color.BLACK);
         }
     }
 
     private void breathFirstSearch(final int index) {
-        vertices.forEach(v -> {
-            v.setColor(Vertex.Color.WHITE);
-            v.setDiscover(0);
-            v.setFinish(0);
-            v.setPredecessor(null);
-        });
+        vertices.forEach(this::resetVertex);
 
         time = 0;
-
         Queue<Vertex> queue = new LinkedList<>();
         Vertex start = vertices.get(index);
-        start.setColor(Vertex.Color.GREY);
-        start.setDistance(0);
-        start.setPredecessor(null);
+        setVisited(null, start, 0);
         queue.add(start);
 
         while (!queue.isEmpty()) {
@@ -201,9 +193,7 @@ public class Graph {
             current.stream()
                     .filter(v -> v.getColor() == Vertex.Color.WHITE)
                     .forEach(v -> {
-                        v.setColor(Vertex.Color.GREY);
-                        v.setDistance(current.getDistance() + 1);
-                        v.setPredecessor(current);
+                        setVisited(current, v, current.getDistance() + 1);
                         queue.add(v);
                     });
             current.setColor(Vertex.Color.BLACK);
