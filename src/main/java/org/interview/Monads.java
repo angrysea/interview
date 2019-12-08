@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.*;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Monads {
@@ -23,6 +24,11 @@ public class Monads {
         <R> F map(Function<T, R> f);
     }
 
+    boolean isPrime(int number) {
+        return number > 1 &&
+                IntStream.range(2, number)
+                .noneMatch(i -> number % i == 0);
+    }
     static class Identity<T> implements Functor<T,Identity<?>> {
         private final T value;
         Identity(T value) { this.value = value; }
@@ -58,6 +64,8 @@ public class Monads {
     public static void main(String[] args) {
         Monads monads = new Monads();
 
+        IntStream.range(1, 8).forEach(i ->
+                System.out.printf("isPrime(%d)? %b\n", i, monads.isPrime(i)));
         Supplier<Integer> aSupplier = () -> { return 5; };
         Consumer<Object> aConsumer = System.out::println;
 
