@@ -1,8 +1,12 @@
 package org.interview;
 
+import java.security.cert.CollectionCertStoreParameters;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class BinaryArray {
     List<Integer> a;
@@ -12,10 +16,7 @@ public class BinaryArray {
     }
 
     private BinaryArray(int size) {
-        a = new ArrayList<Integer>(size);
-        for(int i=0; i<size; ++i) {
-            a.add(i, 0);
-        }
+        a = IntStream.range(0, size).boxed().map(i -> 0).collect(Collectors.toList());
     }
 
     private BinaryArray() {

@@ -2,6 +2,7 @@ package org.interview;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.LinkedList;
 import java.util.List;
@@ -20,6 +21,7 @@ public class Boggle {
         static class TrieNode {
             static final int ALPHABET_SIZE = 'z' - 'a' + 1;
             final List<TrieNode> children;
+            char value;
             boolean isEndOfWord;
 
             TrieNode() {
@@ -39,6 +41,7 @@ public class Boggle {
                 if (child == null) {
                     child = new TrieNode();
                     children.set(index, child);
+                    child.value = (char) (index + 'a');
                 }
                 return child;
             }
@@ -65,7 +68,7 @@ public class Boggle {
                     return false;
                 }
             }
-            return true;
+            return crawler.isEndOfWord;
         }
 
         TrieNode next(TrieNode node, final char c) {
@@ -97,13 +100,15 @@ public class Boggle {
                 board[i][j] = (char) (Math.random() * 26 + 'a');
     }
 
-    private final static String filename = "/Users/graffeoa/workspace/data/words.txt";
+    private final static String filename = "d:/workspace/interview/data/words.txt";
 
     void loadDictionary() {
         var start = Instant.now();
         try (Scanner scanner = new Scanner(new File(filename))) {
             while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
+                String line = scanner.nextLine()
+                        .toLowerCase()
+                        .replaceAll("[^a-zA]", "");
                 if (!line.isEmpty()) {
                     try {
                         if(line.length() > 3) {
@@ -118,6 +123,10 @@ public class Boggle {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    boolean search(final String word) {
+        return dictionary.search(word);
     }
 
     public void showWords() {
@@ -150,6 +159,7 @@ public class Boggle {
         visited[i][j] = true;
 
         if(next.isEndOfWord && prefix.length() > 2) {
+            System.out.println(prefix);
             words.add(prefix);
         }
 
@@ -164,7 +174,9 @@ public class Boggle {
 
     void printFoundWords() {
         words.stream().forEach(System.out::println);
+        System.out.println("Total words found: " + words.size());
     }
+
     public String toString() {
         String s = "";
         for (int i = 0; i < N; i++) {
@@ -177,11 +189,20 @@ public class Boggle {
     }
 
     public static void main(String[] args) {
-        Boggle b = new Boggle(24);
+        Boggle b = new Boggle(4);
+        var start = Instant.now();
         b.loadDictionary();
+        var finish = Instant.now();
+        var timeElapsed = Duration.between(start, finish).toMillis();
+        System.out.println("Dictionary loaded in milli seconds: " + timeElapsed);
         System.out.println(b);
+
+        start = Instant.now();
         b.showWords();
+        finish = Instant.now();
+        timeElapsed = Duration.between(start, finish).toMillis();
         b.printFoundWords();
+        System.out.println("Words calulated in milli seconds: " + timeElapsed);
     }
 
     private static void fixedTest() {
