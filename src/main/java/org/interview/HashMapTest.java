@@ -10,6 +10,10 @@ import java.util.Scanner;
 
 public class HashMapTest {
     public static void main(String[] args) {
+        indexBook();
+    }
+
+    private static void indexBook() {
         Map<String, Integer> map = new HashMap<>();
         final String key = "The";
         String largestWord = null;

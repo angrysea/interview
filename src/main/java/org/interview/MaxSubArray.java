@@ -1,3 +1,5 @@
+package org.interview;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -63,12 +65,12 @@ public class MaxSubArray {
                 maxRight = i;
             }
         }
-        return new Triple<Integer>(maxLeft, maxRight, leftSum + rightSum);
+        return new Triple<>(maxLeft, maxRight, leftSum + rightSum);
     }
 
     private Triple<Integer> findMaxSubArray(int low, int high) {
         if (low == high) {
-            return new Triple<Integer>(low, high, array.get(low));
+            return new Triple<>(low, high, array.get(low));
         } else {
             int mid = (low + high) / 2;
             Triple<Integer> left = findMaxSubArray(low, mid);
