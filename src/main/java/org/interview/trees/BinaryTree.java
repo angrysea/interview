@@ -1,7 +1,8 @@
-package org.interview.trees;//                     0
+package org.interview.trees;
+//                     0
 //            1                   2
 //       3         4         5         6
-//    7    8    9   19    11   12   13   14
+//    7    8    9   10    11   12   13   14
 import java.util.Queue;
 import java.util.LinkedList;
 import java.util.Stack;
@@ -144,7 +145,6 @@ public class BinaryTree {
         printInOrderTraversalRec();
         System.out.print("Print In Order Traversal nr: ");
         Stack<BinaryTreeNode> stack = new Stack<>();
-        stack.push(root);
         BinaryTreeNode current = root;
         while (current != null || !stack.isEmpty()) {
             while (current != null) {
@@ -152,7 +152,7 @@ public class BinaryTree {
                 current = current.getLeft();
             }
             current = stack.pop();
-            System.out.print(String.format("%d, ", current.getData()));
+            System.out.printf("%d, ", current.getData());
 
             current = current.getRight();
         }
@@ -168,8 +168,7 @@ public class BinaryTree {
     private void printNode(BinaryTreeNode current) {
         if (current != null) {
             printNode(current.getLeft());
-            System.out.print(current.getData());
-            System.out.print(", ");
+            System.out.printf("%d, ", current.getData());
             printNode(current.getRight());
         }
     }
