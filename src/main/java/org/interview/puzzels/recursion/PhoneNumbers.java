@@ -1,4 +1,4 @@
-package org.interview.puzzels;
+package org.interview.puzzels.recursion;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -38,7 +38,7 @@ public class PhoneNumbers {
     }
 
     public static void main(String[] args) {
-        new PhoneNumbers().getLetterCombinations("027").stream().forEach(System.out::println);
+        new PhoneNumbers().getLetterCombinations("8273").stream().forEach(System.out::println);
 
     }
 
