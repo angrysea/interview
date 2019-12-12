@@ -7,37 +7,40 @@ import java.util.List;
 
 public class PhoneNumbers {
 
-    private static String[] letters = {"abc", "def", "ghi", "jkl", "mno",
+    private static String[] mappings = {"abc", "def", "ghi", "jkl", "mno",
             "pqrs", "tuv", "wxyz"};
 
 
-    static List<String> getLetterCombinations(String numbers) {
+    List<String> getLetterCombinations(String numbers) {
         List<String> results = new LinkedList<>();
-        if(numbers == null || numbers.length() != 2) {
+        if (numbers == null) {
             return Collections.emptyList();
         }
-        int at = numbers.charAt(0) - '0';
-        if(at < 2 || at > 9) {
-            return Collections.emptyList();
-        }
-        String a = letters[at-2];
-
-        at = numbers.charAt(1) - '0';
-        if(at < 2 || at > 9) {
-            return Collections.emptyList();
-        }
-        String b = letters[at-2];
-
-        for(int i = 0; i < a.length(); i++) {
-            for(int j = 0; j < b.length(); j++) {
-                results.add("" + a.charAt(i) + b.charAt(j));
-            }
-        }
+        letterCombinations(results, numbers, "", 0, mappings);
 
         return results;
     }
 
-    public static void main(String[] args) {
-        getLetterCombinations("27").stream().forEach(System.out::println);
+    void letterCombinations(List<String> results, String numbers, String current, int index, String[] mappings) {
+        if(index == numbers.length()) {
+            results.add(current);
+            return;
+        }
+
+        int at = numbers.charAt(index) - '0';
+        if(at < 2 || at > 9) {
+            letterCombinations(results, numbers, current, index+1, mappings);
+            return;
+        }
+        String letters = mappings[at-2];
+        for(int i = 0; i < letters.length(); i++) {
+            letterCombinations(results, numbers, current + letters.charAt(i), index+1, mappings);
+        }
     }
+
+    public static void main(String[] args) {
+        new PhoneNumbers().getLetterCombinations("027").stream().forEach(System.out::println);
+
+    }
+
 }
