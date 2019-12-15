@@ -4,49 +4,49 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MergeSort {
-    private List<Integer> arr;
+    private int[] arr;
+    private int[] temp;
 
-    private MergeSort(Integer [] data)  {
-        arr = Arrays.asList(data);
+    private MergeSort(int[] data)  {
+        this.arr = data;
+        this.temp = new int[arr.length];
     }
 
-    private void merge(final Integer[] arr, final Integer[] temp, final int leftStart, final int rightEnd) {
-        final int leftEnd = (leftStart + rightEnd) / 2;
-        final int rightStart = leftEnd + 1;
-        final int size = rightEnd - leftStart + 1;
+    private void merge(final int low, final int middle, final int high) {
+        int i = low;
+        while(!(i > high)) {
+            temp[i] = arr[i++];
+        }
 
-        int left = leftStart;
-        int right = rightStart;
-        int index = leftStart;
+        i = low;
+        int j = middle + 1;
+        int k = low;
 
-        while(left <= leftEnd && right <= rightEnd) {
-            if(arr[left] <= arr[right]) {
-                temp[index] = arr[left];
-                left++;
+        while(i <= middle && j <= high) {
+            if(temp[i] <= temp[j]) {
+                arr[k++] = temp[i++];
             }
             else {
-                temp[index] = arr[right];
-                right++;
+                arr[k++] = temp[j++];
             }
-            index++;
         }
 
-        System.arraycopy(arr, left, temp, index, leftEnd - left + 1);
-        System.arraycopy(arr, right, temp, index, rightEnd - right + 1);
-        System.arraycopy(temp, leftStart, arr, leftStart, rightEnd - leftStart + 1);
-    }
-
-    private void mergeSort(final Integer[] arr, final Integer[] temp, int leftStart, int rightEnd) {
-        if (leftStart < rightEnd) {
-            int middle = (leftStart + rightEnd) / 2;
-            mergeSort(arr, temp, leftStart, middle);
-            mergeSort(arr, temp, middle + 1, rightEnd);
-            merge(arr, temp, leftStart, rightEnd);
+        while(i <= middle) {
+            arr[k++] = temp[i++];
         }
     }
 
-    private void sort(final Integer[] arr) {
-        mergeSort(arr, new Integer[arr.length], 0, arr.length-1);
+    private void mergeSort(int low, int high) {
+        if (low < high) {
+            int middle = low + (high - low) / 2;
+            mergeSort(low, middle);
+            mergeSort(middle + 1, high);
+            merge(low, middle, high);
+        }
+    }
+
+    private void sort() {
+        mergeSort(0, arr.length-1);
     }
 
     private void print() {
@@ -58,9 +58,9 @@ public class MergeSort {
     }
 
     public static void main(String[] args) {
-        Integer [] ms = { 2, 4, 5, 7, 1, 2, 3, 6 };
+        int[] ms = { 2, 4, 5, 7, 1, 2, 3, 6 };
         MergeSort test = new MergeSort(ms);
-        test.sort(ms);
+        test.sort();
         test.print();
     }
 }
