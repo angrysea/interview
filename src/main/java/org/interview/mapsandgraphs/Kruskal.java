@@ -57,8 +57,6 @@ public class Kruskal {
                 union(parents, x, y);
             }
         }
-
-
         return mst;
     }
 
