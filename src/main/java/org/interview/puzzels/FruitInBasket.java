@@ -18,7 +18,6 @@ public class FruitInBasket {
                 for (int value : map.values()) {
                     min = Math.min(min, value);
                 }
-
                 i = min + 1;
                 map.remove(tree[min]);
             }

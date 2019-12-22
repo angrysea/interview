@@ -18,8 +18,9 @@ public class Kruskal {
         }
     }
 
-    class SubSet {
-        int parent, rank;
+    static class SubSet {
+        int parent;
+        int rank;
     }
 
     int verticies;
@@ -57,8 +58,6 @@ public class Kruskal {
                 union(parents, x, y);
             }
         }
-
-
         return mst;
     }
 
@@ -69,7 +68,7 @@ public class Kruskal {
         return vertex;
     }
 
-    void union(SubSet [] parents, int x, int y){
+    void union(SubSet[] parents, int x, int y){
         int xroot = find(parents, x);
         int yroot = find(parents, y);
         if(parents[xroot].rank < parents[yroot].rank) {
@@ -93,7 +92,7 @@ public class Kruskal {
         graph.addEdge(2, 3, 4);
         graph.addEdge(3, 4, 2);
         graph.addEdge(4, 5, 6);
-       graph.findMST().forEach(edge -> System.out.printf(
+        graph.findMST().forEach(edge -> System.out.printf(
                 "Edge - source: %d destination: %d weight: %d.\n",
                 edge.source, edge.dest, edge.weight));
     }
