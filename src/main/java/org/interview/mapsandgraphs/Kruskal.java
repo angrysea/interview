@@ -35,6 +35,7 @@ public class Kruskal {
     }
 
     List<Edge> findMST() {
+
         PriorityQueue<Edge> queue = new PriorityQueue<>(edges.size(), Comparator.comparingInt(o -> o.weight));
         edges.stream().forEach(queue::add);
 

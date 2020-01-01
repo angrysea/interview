@@ -3,12 +3,10 @@ package org.interview.trees;
 //            1                   2
 //       3         4         5         6
 //    7    8    9   10    11   12   13   14
-import java.util.Queue;
-import java.util.LinkedList;
-import java.util.Stack;
+import java.util.*;
 
 public class BinaryTree {
-    static class BinaryTreeNode {
+    public static class BinaryTreeNode {
         private BinaryTreeNode left;
         private BinaryTreeNode right;
         private int data;
@@ -19,7 +17,7 @@ public class BinaryTree {
             this.right = null;
         }
 
-        int getData() {
+        public int getData() {
             return data;
         }
 
@@ -31,23 +29,27 @@ public class BinaryTree {
             this.left = left;
         }
 
-        BinaryTreeNode getLeft() {
+        public BinaryTreeNode getLeft() {
             return left;
         }
 
-        BinaryTreeNode getRight() {
+        public BinaryTreeNode getRight() {
             return right;
         }
     }
 
     private BinaryTreeNode root;
 
+    public BinaryTreeNode getRoot() {
+        return root;
+    }
+
     public BinaryTreeNode setRoot(int value) {
         root = new BinaryTreeNode(value);
         return root;
     }
 
-    private BinaryTreeNode loadTree(int[] values) {
+    public BinaryTreeNode loadTree(int[] values) {
         Queue<BinaryTreeNode> nodes = new LinkedList<>();
         for (int i : values) {
             nodes.add(new BinaryTreeNode(i));
@@ -104,21 +106,36 @@ public class BinaryTree {
     }
 
     private void printLevelOrderTraversal() {
-        System.out.print("Print Level Order Traversal: ");
-        Queue<BinaryTreeNode> nodes = new LinkedList<>();
-        nodes.add(root);
-        while (!nodes.isEmpty()) {
-            BinaryTreeNode current = nodes.remove();
-            System.out.print(String.format("%d, ", current.getData()));
-            BinaryTreeNode next = current.getLeft();
-            if (next != null) {
-                nodes.add(next);
+        List<List<BinaryTreeNode>> levelOrder = new ArrayList<>();
+        Queue<BinaryTreeNode> currentLevel = new LinkedList<>();
+        currentLevel.add(root);
+        Queue<BinaryTreeNode> nextLevel = new LinkedList<>();
+        while (!currentLevel.isEmpty()) {
+            List<BinaryTreeNode> level = new ArrayList<>();
+            while (!currentLevel.isEmpty()) {
+                BinaryTreeNode current = currentLevel.remove();
+                level.add(current);
+                BinaryTreeNode next = current.getLeft();
+                if (next != null) {
+                    nextLevel.add(next);
+                }
+                next = current.getRight();
+                if (next != null) {
+                    nextLevel.add(next);
+                }
             }
-            next = current.getRight();
-            if (next != null) {
-                nodes.add(next);
+
+            if(!level.isEmpty()) {
+                levelOrder.add(level);
             }
+
+            Queue<BinaryTreeNode> temp = currentLevel;
+            currentLevel = nextLevel;
+            nextLevel = temp;
         }
+        System.out.print("Print Level Order Traversal: ");
+        levelOrder.forEach(list -> list.forEach(node ->
+                System.out.printf("%d, ", node.getData())));
         System.out.println();
     }
 

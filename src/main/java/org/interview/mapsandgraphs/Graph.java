@@ -94,7 +94,7 @@ public class Graph {
     private final List<Vertex> vertices;
     private int time;
 
-    private Graph(final int size) {
+    public Graph(final int size) {
         this.vertices = IntStream.range(0, size)
                 .boxed()
                 .map(Vertex::new)
