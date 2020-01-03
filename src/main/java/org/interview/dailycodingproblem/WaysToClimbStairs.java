@@ -29,11 +29,12 @@ public class WaysToClimbStairs {
     }
 
     public static void main(String[] args) {
-        ;
         WaysToClimbStairs o = new WaysToClimbStairs();
         System.out.printf("There are %d ways to climb the stairs.\n",
                 o.numWays(new int[]{1, 2}, 4));
         System.out.printf("There are %d ways to climb the stairs.\n",
                 o.numWays(new int[]{1, 3, 5}, 10));
+        System.out.printf("There are %d ways to climb the stairs.\n",
+                o.numWays(new int[]{1, 3, 5, 8}, 10));
     }
 }

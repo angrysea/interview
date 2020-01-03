@@ -13,8 +13,10 @@ public class WordBreak {
         dictionary = new Trie();
     }
 
-    private void breakWord(final String str) {
-        breakWord(str, str.length(), "");
+    private String breakWord(final String str) {
+        String results = "";
+        breakWord(str, str.length(), results);
+        return results;
     }
 
     private void breakWord(final String str, int n, String result) {
@@ -31,39 +33,78 @@ public class WordBreak {
         }
     }
 
-    private boolean breakWorddp(final String str) {
+     private boolean breakWordDP(final String str) {
         final int size = str.length();
         if (size == 0) {
             return true;
         }
 
-        Vector<Boolean> wb = new Vector<>(size + 1);
-        IntStream.range(0, size).forEach(n -> wb.add(false));
+        boolean[] wb = new boolean[size + 1];
+        Arrays.fill(wb, false);
 
-        for (int i = 0; i < size; i++) {
-            if (!wb.get(i) && isWord(str.substring(0, i + 1))) {
-                wb.set(i, true);
+        wb[0] = true;
+        int count = 0;
+        for (int i = 1; i <= size; i++) {
+            String word = str.substring(0, i);
+
+            if (wb[i] == false && isWord(word)) {
+                wb[i] = true;
             }
 
-            if (wb.get(i)) {
-                if (i == size-1) {
-                    return true;
-                }
+            if (wb[i] == true) {
+                for (int j = i + 1; j <= size; j++) {
+                    count++;
+                    word = str.substring(i, j);
+                    System.out.printf("From %d to %d word: %s.\n", i, j, word);
 
-                for (int j = i; j < size; j++) {
-                    final String word = str.substring(i, j - i + 1);
-                    if (!wb.get(i) && isWord(word)) {
-                        wb.set(i, true);
+                    if (wb[j] == false) {
+                        wb[j] = isWord(word);
                     }
-                    if (j == size-1 && wb.get(j)) {
+                    if (j == size && wb[j] == true) {
+                        System.out.printf("Count: %d.\n", count);
                         return true;
                     }
                 }
             }
         }
+        System.out.printf("Count: %d.\n", count);
+        return wb[size];
+    }
 
-        wb.forEach(b -> System.out.println(" " + b));
-        return false;
+    private boolean breakWordDP2(final String str) {
+        final int size = str.length();
+        if (size == 0) {
+            return true;
+        }
+
+        boolean[] wb = new boolean[size + 1];
+        Arrays.fill(wb, false);
+
+        wb[0] = true;
+        int count = 0;
+        for (int i = 1; i <= size; i++) {
+            for (int j = 0; j < i; j++) {
+                count++;
+                String word = str.substring(j, i);
+//                System.out.printf("From %d to %d word: %s.\n", j, i, word);
+
+                if(wb[j]) {
+                    System.out.printf("From %d to %d word: %s.\n", j, i, word);
+                    wb[i] |= wb[j] && isWord(word);
+                }
+                else {
+                    wb[i] = isWord(word);
+                }
+
+//                wb[i] |= wb[j] && isWord(word);
+                if (wb[i]) {
+                    System.out.printf("Found word: %s.\n", word);
+                    break;
+                }
+            }
+        }
+        System.out.printf("Count: %d.\n", count);
+        return wb[size];
     }
 
     private boolean isWord(final String word) {
@@ -96,29 +137,27 @@ public class WordBreak {
 
         Arrays.stream(dictionary).forEach(this::insertWord);
 
-        System.out.println("First DP Test: is ");
-        if (breakWorddp("iloveicecreamandmango"))
-            System.out.println("pass.");
-        else
-            System.out.println("fail.");
+        final String test1 = "iloveicecreamandmango";
+        System.out.printf("%s DP Test has %s.\n", test1, breakWordDP(test1) ? "passed" : "failed");
 
-        System.out.println("\nSecond DP Test: ");
-        if (breakWorddp("ilovesamsungmobile"))
-            System.out.println("pass.");
-        else
-            System.out.println("fail.");
-
-        System.out.println("\nThird DP Test: ");
-        if (breakWorddp("thiswillfail"))
-            System.out.println("pass.");
-        else
-            System.out.println("fail.");
-
-        System.out.println("First Test: ");
-        breakWord("iloveicecreamandmango");
-
-        System.out.println("\nSecond Test:");
-        breakWord("ilovesamsungmobile");
+//        System.out.println("\nSecond DP Test: ");
+//        if (breakWorddp("ilovesamsungmobile"))
+//            System.out.println("pass.");
+//        else
+//            System.out.println("fail.");
+//
+//        System.out.println("\nThird DP Test: ");
+//        if (breakWorddp("thiswillfail"))
+//            System.out.println("pass.");
+//        else
+//            System.out.println("fail.");
+//
+//
+//        final String test6 = "iloveicecreamandmango";
+//        System.out.printf("Backtracking for %s : %s.", test6, breakWord(test6));
+//
+//        System.out.println("\nSecond Test:");
+//        breakWord("ilovesamsungmobile");
     }
 
     // Word Break Problem
@@ -141,8 +180,14 @@ public class WordBreak {
     }
 
     public static void main(String[] args) {
+//        final String w = "wordbreakproblem";
+//        for (int i = 0; i <= w.length(); i++) {
+//            final String word = w.substring(0, i);
+//            System.out.println(word);
+//        }
+//
         WordBreak wb = new WordBreak();
         wb.testWordBreak();
-        wb.testWordBreak2();
+//        wb.testWordBreak2();
     }
 }

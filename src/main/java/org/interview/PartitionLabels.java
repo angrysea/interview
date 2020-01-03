@@ -5,7 +5,7 @@ import java.util.List;
 
 public class PartitionLabels {
 
-    List<Integer> doPartiion(String input) {
+    List<Integer> doPartition(String input) {
         List<Integer> results = new ArrayList<>();
         int[] lastIndex = new int[26];
 
@@ -31,7 +31,7 @@ public class PartitionLabels {
         String label = "ababcbacadefegdehijhklij";
 
         PartitionLabels o = new PartitionLabels();
-        List<Integer> results = o.doPartiion(label);
+        List<Integer> results = o.doPartition(label);
     }
 
 }
