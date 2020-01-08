@@ -1,8 +1,6 @@
 package org.interview.dailycodingproblem;
 
-import org.interview.mapsandgraphs.HashMapTest;
-
-import java.util.*;
+import java.util.Arrays;
 
 public class WaysToClimbStairs {
     int numWays(int[]counts, int noStairs) {

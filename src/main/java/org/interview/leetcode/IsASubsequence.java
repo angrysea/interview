@@ -12,11 +12,11 @@ public class IsASubsequence {
         }
 
         int index = 0;
-        for(char c : t.toCharArray()) {
+        for (char c : t.toCharArray()) {
             if(s.charAt(index) == c) {
                 index++;
             }
-            if(index>=len) {
+            if (index >= len) {
                 return true;
             }
         }

@@ -78,7 +78,7 @@ public class GenericHashTable<K, V> {
         }
 
         GenericEntry<K, V> entry = new GenericEntry<>(key, value);
-        ((LinkedList<GenericEntry<K, V>>) entries[hashCode]).add(entry);
+        entries[hashCode].add(entry);
     }
 
     public static void main(String[] args) {
@@ -87,7 +87,8 @@ public class GenericHashTable<K, V> {
         String largestWord = null;
         int largest = 0;
 
-        final String filename = "/Users/graffeoa/workspace/data/kingjames.txt";
+        final String filename = "D:\\workspace\\interview\\data\\kingjames.txt";
+//        final String filename = "/Users/graffeoa/workspace/data/kingjames.txt";
         try (Scanner scanner = new Scanner(new File(filename))) {
             int value = 0;
             while (scanner.hasNext()) {

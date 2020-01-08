@@ -20,7 +20,7 @@ public class WaysToDecodeMessage {
         dp[0] = 1;
         dp[1] = mapping.charAt(0) == '0' ? 0 : 1;
 
-        for(int i = 2; i < mapping.length(); i++) {
+        for(int i = 2; i <= mapping.length(); i++) {
             int digit = Integer.valueOf(mapping.substring(i - 1, i));
             if(digit >= 1) {
                 dp[i] += dp[i - 1];
@@ -34,6 +34,7 @@ public class WaysToDecodeMessage {
     }
 
     List<String> decodeMessage(String mapping) {
+        int offset = 'a' - 1;
         if(mapping == null || mapping.isEmpty()) {
             return Collections.EMPTY_LIST;
         }
@@ -48,14 +49,13 @@ public class WaysToDecodeMessage {
             String current = values.pop();
             int index = locations.pop();
             if(index < mapping.length()) {
-                int n = mapping.charAt(index) - '0';
-                values.push(current + (char)(n + 'a' - 1));
+                int n = Integer.valueOf(mapping.substring(index, index + 1));
+                values.push(current + (char)(n + offset));
                 locations.push(index + 1);
                 if (index + 1 < mapping.length()) {
-                    n *= 10;
-                    n += mapping.charAt(index + 1) - '0';
+                    n = Integer.valueOf(mapping.substring(index, index + 2));
                     if (n < 26) {
-                        values.add(current + (char)(n + 'a' - 1));
+                        values.add(current + (char)(n + offset));
                         locations.add(index + 2);
                     }
                 }
@@ -95,9 +95,13 @@ public class WaysToDecodeMessage {
     static public void main(String[] args) {
         WaysToDecodeMessage o = new WaysToDecodeMessage();
         System.out.printf("There are %d number of ways to decode.\n",
-                o.numberOfWaysToDecodeMessage("121314"));
+                o.numberOfWaysToDecodeMessage("232425"));
+        List<String> results = o.decodeMessage("232425");
+        results.forEach(System.out::println);
 
-        List<String> results = o.decodeMessage("121314");
+        System.out.printf("There are %d number of ways to decode.\n",
+                o.numberOfWaysToDecodeMessage("121314"));
+        results = o.decodeMessage("121314");
         results.forEach(System.out::println);
     }
 }

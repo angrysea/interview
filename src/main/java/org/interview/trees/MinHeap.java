@@ -117,6 +117,5 @@ public class MinHeap {
         while(!minHeap.isEmpty()) {
             System.out.println(minHeap.poll());
         }
-
     }
 }

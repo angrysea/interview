@@ -19,7 +19,8 @@ public class HashMapTest {
         String largestWord = null;
         int largest = 0;
 
-        final String filename = "/Users/graffeoa/workspace/data/kingjames.txt";
+        final String filename = "D:\\workspace\\interview\\data\\kingjames.txt";
+//        final String filename = "/Users/graffeoa/workspace/data/kingjames.txt";
         try (Scanner scanner = new Scanner(new File(filename))) {
             int value = 0;
             while (scanner.hasNext()) {

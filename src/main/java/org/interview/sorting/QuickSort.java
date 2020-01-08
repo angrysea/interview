@@ -27,7 +27,7 @@ public class QuickSort {
     }
 
     private int partition(int left, int right) {
-        //randomBetween(left, right);
+        randomBetween(left, right);
         final int pivot = arr[right];
         int i = left - 1;
         for(int j = left; j < right; j++) {

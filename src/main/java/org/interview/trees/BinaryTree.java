@@ -22,7 +22,7 @@ public class BinaryTree {
         }
 
         void insertRight(BinaryTreeNode right) {
-            this.right = right ;
+            this.right = right;
         }
 
         void insertLeft(BinaryTreeNode left) {
@@ -73,6 +73,28 @@ public class BinaryTree {
             }
         }
         return root;
+    }
+
+    BinaryTreeNode treeMin() {
+        return treeMin(root);
+    }
+
+    BinaryTreeNode treeMin(BinaryTreeNode node) {
+        while (node.left != null) {
+            node = node.left;
+        }
+        return node;
+    }
+
+    BinaryTreeNode treeMax() {
+        return treeMax(root);
+    }
+
+    BinaryTreeNode treeMax(BinaryTreeNode node) {
+        while (node.right != null) {
+            node = node.right;
+        }
+        return node;
     }
 
     private void printPostOrderTraversal() {

@@ -6,6 +6,10 @@ public class CoinChange {
 
 
     int howManyCoins(int[] coins, int amount) {
+        if(amount == 0) {
+            return 0;
+        }
+
         int count = 0;
         int[] dp = new int[amount + 1];
         Arrays.fill(dp, Integer.MAX_VALUE);
@@ -29,7 +33,8 @@ public class CoinChange {
 
     public static void main(String[] args) {
         CoinChange o = new CoinChange();
-        System.out.printf("It takes %d coins to total 11",
-                o.howManyCoins(new int[]{1,2,5}, 11));
+        int amount = 77;
+        System.out.printf("It takes %d coins to total %d.\n",
+                o.howManyCoins(new int[]{1,5,10,25}, amount), amount);
     }
 }

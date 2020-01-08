@@ -19,6 +19,32 @@ public class HeightOfATree {
     int treeHeight(final Node root) {
         int height = 0;
         Queue<Node> queue = new LinkedList<>();
+        Queue<Node> nextLevel = new LinkedList<>();
+        queue.add(root);
+
+        while(!queue.isEmpty()) {
+            height++;
+            while(!queue.isEmpty()) {
+                Node node = queue.poll();
+                if(node != null) {
+                    if (node.left != null) {
+                        nextLevel.add(node.left);
+                    }
+                    if (node.right != null) {
+                        nextLevel.add(node.right);
+                    }
+                }
+            }
+            Queue<Node> tempQueue = queue;
+            queue = nextLevel;
+            nextLevel = tempQueue;
+        }
+        return height;
+    }
+
+    int treeHeight2(final Node root) {
+        int height = 0;
+        Queue<Node> queue = new LinkedList<>();
         queue.add(root);
 
         while(true) {
@@ -47,9 +73,9 @@ public class HeightOfATree {
         if (node == null) {
             return 0;
         } else {
-            int leftLen = 1 + getLength(node.left);
-            int rightLen = 1 + getLength(node.right);
-            return Math.max(leftLen, rightLen);
+            int leftLen = getLength(node.left);
+            int rightLen = getLength(node.right);
+            return Math.max(leftLen, rightLen) + 1;
         }
     }
 
@@ -67,6 +93,7 @@ public class HeightOfATree {
         six.right = new Node(7);
 
         System.out.println(new HeightOfATree().treeHeight(three));
+        System.out.println(new HeightOfATree().treeHeight2(three));
         System.out.println(getLength(three));
     }
 }

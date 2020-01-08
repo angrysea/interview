@@ -26,11 +26,9 @@ public class LinkedList<T> {
     }
 
     static class ListIterator<T> implements Iterator<T> {
-        Node<T> lastReturned;
         Node<T> next;
 
         ListIterator(Node<T> start) {
-            this.lastReturned = null;
             this.next = start;
         }
 
@@ -42,8 +40,7 @@ public class LinkedList<T> {
         @Override
         public T next() {
             final T data = next.data;
-            lastReturned = next;
-            next = lastReturned.next;
+            next = next.next;
             return data;
         }
     }
@@ -85,7 +82,7 @@ public class LinkedList<T> {
 
     public T remove() {
         if(root == null) {
-            throw new NullPointerException("root queue is emptu.");
+            throw new NullPointerException("root queue is empty.");
         }
         T value = root.data;
         root = root.next;
@@ -94,7 +91,6 @@ public class LinkedList<T> {
         }
         return value;
     }
-
 
     // prints content of double linked list
     void printList() {
@@ -108,7 +104,8 @@ public class LinkedList<T> {
     public static void main(String[] args) {
         LinkedList list = new LinkedList();
 
-        final String filename = "/Users/graffeoa/workspace/data/kingjames.txt";
+        final String filename = "D:\\workspace\\interview\\data\\kingjames.txt";
+//        final String filename = "/Users/graffeoa/workspace/data/kingjames.txt";
         Instant start = Instant.now();
         try (Scanner scanner = new Scanner(new File(filename))) {
             int value = 0;
@@ -124,7 +121,6 @@ public class LinkedList<T> {
         Instant finish = Instant.now();
         long timeElapsed = Duration.between(start, finish).toMillis();
         System.out.println("Milli seconds to load: " + timeElapsed);
-
 
         ListIterator<String> it = list.listIterator();
         int value = 0;
