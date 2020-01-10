@@ -49,10 +49,15 @@ public class BinaryTree {
         return root;
     }
 
-    public BinaryTreeNode loadTree(int[] values) {
+    public BinaryTreeNode loadTree(Integer[] values) {
         Queue<BinaryTreeNode> nodes = new LinkedList<>();
-        for (int i : values) {
-            nodes.add(new BinaryTreeNode(i));
+        for (Integer i : values) {
+            if(i != null) {
+                nodes.add(new BinaryTreeNode(i));
+            }
+            else {
+                nodes.add(null);
+            }
         }
 
         root = nodes.remove();
@@ -97,7 +102,7 @@ public class BinaryTree {
         return node;
     }
 
-    private void printPostOrderTraversal() {
+     private void printPostOrderTraversal() {
         System.out.print("Print Post Order Traversal: ");
         Stack<BinaryTreeNode> nodes = new Stack<>();
         Queue<BinaryTreeNode> currentLevel = new LinkedList<>();
@@ -204,6 +209,54 @@ public class BinaryTree {
         System.out.println();
     }
 
+    private boolean IsSymmetric() {
+        List<BinaryTreeNode> nodes = new ArrayList<>();
+        Queue<BinaryTreeNode> currentLevel = new LinkedList<>();
+        Queue<BinaryTreeNode> nextLevel = new LinkedList<>();
+        if (root.getRight() != null) {
+            currentLevel.add(root.getRight());
+        }
+        if (root.getLeft() != null) {
+            currentLevel.add(root.getLeft());
+        }
+
+        while (!currentLevel.isEmpty()) {
+            while (!currentLevel.isEmpty()) {
+                BinaryTreeNode current = currentLevel.remove();
+                nodes.add(current);
+                if(current != null) {
+                    nextLevel.add(current.getRight());
+                    nextLevel.add(current.getLeft());
+                }
+            }
+            int size = nodes.size();
+            if((size % 2) > 0) {
+                System.out.println("Is not symmetric!");
+                return false;
+            }
+
+            for(int i = 0, j = size - 1; i < j; i++, j--) {
+                BinaryTreeNode right = nodes.get(i);
+                BinaryTreeNode left = nodes.get(j);
+                if (right == null && left == null) {
+                    continue;
+                }
+
+                if(right == null || left == null || right.getData() != left.getData()) {
+                    System.out.println("Is not symmetric!");
+                    return false;
+                }
+            }
+            nodes.clear();
+            Queue<BinaryTreeNode> temp = currentLevel;
+            currentLevel = nextLevel;
+            nextLevel = temp;
+        }
+
+        System.out.println("Is Symmetric!!!!!");
+        return true;
+    }
+
     private void printNode(BinaryTreeNode current) {
         if (current != null) {
             printNode(current.getLeft());
@@ -212,13 +265,40 @@ public class BinaryTree {
         }
     }
 
-    public static void main(String[] args) {
-        int[] values = new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
+     public static void main(String[] args) {
+        Integer[] values = new Integer[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
+//        int[] values = new int[]{0, 1, 1, 2, 3, 3, 2, 4, 5, 6, 7, 7, 6, 5, 4};
         BinaryTree tree = new BinaryTree();
+//        tree.loadTree(values);
+//        tree.IsSymmetric();
+//        tree.printLevelOrderTraversal();
+//        tree.printPostOrderTraversal();
+//        tree.printInOrderTraversal();
+//        tree.printPreOrderTraversal();
+        values = new Integer[]{0, 1, 1, 2, 3, 3, 2, 4, 5, 6, 7, 7, 6, 5, 4};
+        tree = new BinaryTree();
         tree.loadTree(values);
-        tree.printLevelOrderTraversal();
-        tree.printPostOrderTraversal();
-        tree.printInOrderTraversal();
-        tree.printPreOrderTraversal();
+        tree.IsSymmetric();
+
+        values = new Integer[]{0, 1, 1, 2, 3, 3, 2, null, 5, 6, 7, 7, null, 6, 5};
+//        Queue<BinaryTreeNode> test = new LinkedList<>();
+//        Arrays.stream(values).forEach(value -> {
+//            if(value == null) {
+//                test.add(null);
+//            }
+//            else {
+//                test.add(new BinaryTreeNode(value));
+//
+//            }
+//        });
+//        while(!test.isEmpty()) {
+//            BinaryTreeNode node = test.remove();
+//            if(node == null) {
+//                System.out.println("Node is null");
+//            }
+//        }
+        tree = new BinaryTree();
+        tree.loadTree(values);
+        tree.IsSymmetric();
     }
 }
