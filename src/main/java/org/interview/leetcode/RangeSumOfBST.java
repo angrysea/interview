@@ -2,7 +2,6 @@ package org.interview.leetcode;
 
 import org.interview.trees.BinarySearchTree;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -15,8 +14,7 @@ public class RangeSumOfBST {
             return 0;
         }
 
-        Queue<BinarySearchTree.BinarySearchTreeNode<Integer>> queue =
-                new LinkedList<>();
+        Queue<BinarySearchTree.BinarySearchTreeNode<Integer>> queue = new LinkedList<>();
         queue.add(root);
         while(!queue.isEmpty()) {
             BinarySearchTree.BinarySearchTreeNode<Integer> current = queue.remove();
@@ -39,7 +37,7 @@ public class RangeSumOfBST {
         int l = 7;
         int r = 15;
 
-//        Integer[] values = new Integer[]{10,5,15,3,7,13,18,1,6};
+//        values = new Integer[]{10,5,15,3,7,13,18,1,6};
 //        int l = 6;
 //        int r = 10;
 
