@@ -5,17 +5,17 @@ import java.util.Map;
 
 public class TwoSum {
 
-    private int[] findTwo(final int[] arr, final int sum) {
+    private int[] findTwo(final int[] sums, final int target) {
         int[] ret = new int[2];
         Map<Integer, Integer> map = new HashMap<>();
-        for(int i = 0; i < arr.length; i++) {
-            int difference = sum - arr[i];
+        for(int i = 0; i < sums.length; i++) {
+            int difference = target - sums[i];
             if(map.containsKey(difference)) {
                 ret[0] = i;
                 ret[1] = map.get(difference);
                 break;
             }
-            map.put(arr[i], i);
+            map.put(sums[i], i);
         }
 
         return ret;
