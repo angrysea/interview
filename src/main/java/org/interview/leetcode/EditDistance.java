@@ -10,6 +10,8 @@ import java.util.Arrays;
     Insert a character
     Delete a character
     Replace a character
+
+    Levenshtein's edit distance algorithm
  */
 public class EditDistance {
 
