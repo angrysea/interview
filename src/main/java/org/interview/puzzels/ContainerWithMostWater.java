@@ -38,8 +38,7 @@ public class ContainerWithMostWater {
     public static void main(String[] args) {
 
         int[] levels = {1, 8, 6, 2, 5, 4, 8, 3, 7};
-
-        ContainerWithMostWater cwmw = new ContainerWithMostWater();
-        System.out.println(cwmw.findMaxArea(levels));
+        ContainerWithMostWater containerWithMostWater = new ContainerWithMostWater();
+        System.out.println(containerWithMostWater.findMaxArea(levels));
     }
 }

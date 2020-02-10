@@ -3,6 +3,8 @@ package org.interview.puzzels.dfs;
 import java.util.Objects;
 
 public class NumberOfIslands {
+    int [][] m = new int[][] {{0, 1}, {0,-1}, {1,0}, {-1,0}};
+
     public int numIslands(int[][] grid) {
         int numIslands = 0;
         Objects.requireNonNull(grid);
@@ -22,17 +24,15 @@ public class NumberOfIslands {
 
     int dfs(int[][] grid, int row, int col) {
 
-        if (row < 0 || row >= grid.length ||
-                col < 0 || col >= grid[row].length || grid[row][col] == 0) {
+        if (row < 0 || row >= grid.length || col < 0 || col >= grid[row].length || grid[row][col] == 0) {
             return 0;
         }
 
         grid[row][col] = 0;
-        dfs(grid, row, col + 1);
-        dfs(grid, row, col - 1);
-        dfs(grid, row + 1, col);
-        dfs(grid, row - 1, col);
 
+        for(int i = 0; i < m.length; i++) {
+            dfs(grid, row + m[i][0], col + + m[i][1]);
+        }
         return 1;
     }
 

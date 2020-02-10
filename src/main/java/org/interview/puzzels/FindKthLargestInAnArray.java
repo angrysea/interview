@@ -4,9 +4,9 @@ import java.util.PriorityQueue;
 
 public class FindKthLargestInAnArray {
 
-    int find(int[]data, int k) {
+    int find(int[] nums, int k) {
         PriorityQueue<Integer> minHeap = new PriorityQueue<>();
-        for(int i : data) {
+        for(int i : nums) {
             minHeap.add(i);
             if(minHeap.size() > k) {
                 minHeap.remove();

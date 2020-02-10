@@ -35,9 +35,9 @@ public class PlaceNumberOfQueens {
             return true;
         }
 
-        int []ld = new int[30];
-        int []rd = new int[30];
-        int []cl = new int[30];
+        int[] ld = new int[30];
+        int[] rd = new int[30];
+        int[] cl = new int[30];
 
         for(int i = 0; i < N; i++) {
             if ((ld[i - col + N - 1] != 1 && rd[i + col] != 1) && cl[i] != 1) {
@@ -45,7 +45,7 @@ public class PlaceNumberOfQueens {
                 ld[i - col + N - 1] = rd[i + col] = cl[i] = 1;
                 System.out.printf("Moving foward col: %d N: %d queens.\n", col, N);
                 printSolution(board, N);
-                if(solveNQueens(board, col + 1, N)) {
+                if(solveNQueensOpt(board, col + 1, N)) {
                     return true;
                 }
                 board[i][col] = 0;

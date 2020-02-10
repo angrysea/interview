@@ -3,8 +3,7 @@ package org.interview.puzzels.backtracking;
 import java.util.Arrays;
 
 public class KnightsTour {
-    static int rowMove[] = {2, 1, -1, -2, -2, -1,  1, 2};
-    static int colMove[] = {1, 2,  2,  1, -1, -2, -2, -1};
+    static int[][] moves = {{2, 1}, {1, 2}, {-1, 2}, {-2, 1}, {-2, -1}, {-1, -2}, {1, -2}, {2, -1}};
 
     boolean tourTheBoard(int[][] board, int N) {
         Arrays.stream(board).forEach(cols -> Arrays.fill(cols, -1));
@@ -18,9 +17,9 @@ public class KnightsTour {
         }
 
         for (int i = 0; i < 8; i++) {
-            int nextRow = row + rowMove[i];
-            int nextCol = col + colMove[i];
-            if (nextRow >= 0 && nextRow < N && nextCol >= 0 && nextCol < N && board[nextRow][nextCol] == -1) {
+            int nextRow = row + moves[i][0], nextCol = col + moves[i][1];
+            if (nextRow >= 0 && nextRow < N && nextCol >= 0 &&
+                    nextCol < N && board[nextRow][nextCol] == -1) {
                 board[nextRow][nextCol] = count;
                 if (tour(board, nextRow, nextCol, count + 1, N)) {
                     return true;
