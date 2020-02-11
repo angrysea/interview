@@ -269,18 +269,18 @@ public class BinaryTree {
         Integer[] values = new Integer[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
 //        int[] values = new int[]{0, 1, 1, 2, 3, 3, 2, 4, 5, 6, 7, 7, 6, 5, 4};
         BinaryTree tree = new BinaryTree();
-//        tree.loadTree(values);
-//        tree.IsSymmetric();
-//        tree.printLevelOrderTraversal();
-//        tree.printPostOrderTraversal();
-//        tree.printInOrderTraversal();
-//        tree.printPreOrderTraversal();
-        values = new Integer[]{0, 1, 1, 2, 3, 3, 2, 4, 5, 6, 7, 7, 6, 5, 4};
-        tree = new BinaryTree();
         tree.loadTree(values);
         tree.IsSymmetric();
-
-        values = new Integer[]{0, 1, 1, 2, 3, 3, 2, null, 5, 6, 7, 7, null, 6, 5};
+        tree.printLevelOrderTraversal();
+        tree.printPostOrderTraversal();
+        tree.printInOrderTraversal();
+        tree.printPreOrderTraversal();
+//        values = new Integer[]{0, 1, 1, 2, 3, 3, 2, 4, 5, 6, 7, 7, 6, 5, 4};
+//        tree = new BinaryTree();
+//        tree.loadTree(values);
+//        tree.IsSymmetric();
+//
+//        values = new Integer[]{0, 1, 1, 2, 3, 3, 2, null, 5, 6, 7, 7, null, 6, 5};
 //        Queue<BinaryTreeNode> test = new LinkedList<>();
 //        Arrays.stream(values).forEach(value -> {
 //            if(value == null) {
@@ -297,8 +297,8 @@ public class BinaryTree {
 //                System.out.println("Node is null");
 //            }
 //        }
-        tree = new BinaryTree();
-        tree.loadTree(values);
-        tree.IsSymmetric();
+//        tree = new BinaryTree();
+//        tree.loadTree(values);
+//        tree.IsSymmetric();
     }
 }
