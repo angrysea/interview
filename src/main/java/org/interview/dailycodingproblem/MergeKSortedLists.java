@@ -4,8 +4,9 @@ import java.util.Arrays;
 import java.util.PriorityQueue;
 
 public class MergeKSortedLists {
+
     int[] mergeLists(int[][] lists) {
-        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+        final PriorityQueue<Integer> minHeap = new PriorityQueue<>();
         Arrays.stream(lists).forEach(list ->Arrays.stream(list).forEach(minHeap::add));
         int size = minHeap.size();
         int[] merged = new int[size];
@@ -20,6 +21,6 @@ public class MergeKSortedLists {
         MergeKSortedLists o = new MergeKSortedLists();
 
         System.out.println("Merged List:");
-        Arrays.stream((o.mergeLists(lists))).forEach(i -> System.out.printf("%d, ", i));
+        Arrays.stream(o.mergeLists(lists)).forEach(i -> System.out.printf("%d, ", i));
     }
 }

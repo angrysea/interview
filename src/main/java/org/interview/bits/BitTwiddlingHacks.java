@@ -1,5 +1,10 @@
 package org.interview.bits;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.Stack;
+
 /*
  * http://graphics.stanford.edu/~seander/bithacks.html
  */
@@ -50,7 +55,28 @@ public class BitTwiddlingHacks {
         return bitMask.toString();
     }
 
+    static int reverseInt(int n) {
+        if(n < 10) {
+            return n;
+        }
+        Stack<Integer> queue = new Stack<>();
+        while(n > 0) {
+            queue.push(n % 10);
+            n /= 10;
+        }
+
+        int reversed = 0;
+        int factor = 1;
+        while(!queue.isEmpty()) {
+            reversed = reversed + (queue.pop() * factor);
+            factor *= 10;
+        }
+
+        return reversed;
+    }
+
     static public void main(String[] args) {
+        reverseInt(1876543211);
         System.out.printf("Bits mask of %d is %s\n", -2103453123, getBitMask2(-2103453123));
         System.out.printf("Bits mask of %d is %s\n", -2103453123, getBitMask(-2103453123));
         System.out.printf("Bits mask of %d is %s\n", 2103453123, getBitMask2(2103453123));
