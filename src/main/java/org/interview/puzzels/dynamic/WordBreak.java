@@ -3,6 +3,7 @@ package org.interview.puzzels.dynamic;
 import org.interview.trees.Trie;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Vector;
 import java.util.stream.IntStream;
 
@@ -43,13 +44,15 @@ public class WordBreak {
         Arrays.fill(wb, false);
 
         wb[0] = true;
-        int count = 0;
+        int count = 0, lookups = 0;
         for (int i = 1; i <= size; i++) {
             String word = str.substring(0, i);
 
             if (wb[i] == false && isWord(word)) {
+                lookups++;
                 wb[i] = true;
             }
+
 
             if (wb[i] == true) {
                 for (int j = i + 1; j <= size; j++) {
@@ -59,15 +62,16 @@ public class WordBreak {
 
                     if (wb[j] == false) {
                         wb[j] = isWord(word);
+                        lookups++;
                     }
                     if (j == size && wb[j] == true) {
-                        System.out.printf("Count: %d.\n", count);
+                        System.out.printf("Count: %d Lookups: %d.\n", count, lookups);
                         return true;
                     }
                 }
             }
         }
-        System.out.printf("Count: %d.\n", count);
+        System.out.printf("Count: %d Lookups: %d.\n", count, lookups);
         return wb[size];
     }
 
@@ -89,7 +93,6 @@ public class WordBreak {
 //                System.out.printf("From %d to %d word: %s.\n", j, i, word);
 
                 if(wb[j]) {
-                    System.out.printf("From %d to %d word: %s.\n", j, i, word);
                     wb[i] |= wb[j] && isWord(word);
                 }
                 else {
@@ -127,6 +130,18 @@ public class WordBreak {
 
     private void insertWord(final String word) {
         dictionary.insert(word);
+    }
+
+    public boolean wordBreak(String s, List<String> wordDict) {
+        int start = 0;
+        for(int i = 1; i < s.length(); i++) {
+            if(wordDict.contains(s.substring(start, i))) {
+                if(i == s.length() - 1) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private void testWordBreak() {
@@ -188,6 +203,10 @@ public class WordBreak {
 //
         WordBreak wb = new WordBreak();
         wb.testWordBreak();
+
+        final List<String> dict = Arrays.asList(new String[] {"cats", "dog", "sand", "and", "cat"});
+        final String s = "catsandog";
+
 //        wb.testWordBreak2();
     }
 }

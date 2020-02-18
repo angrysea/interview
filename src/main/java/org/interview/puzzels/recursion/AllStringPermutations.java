@@ -6,30 +6,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AllStringPermutations {
-    private void permutate(String s, int left, int right, List<String> results) {
+    private void swap(char[] arr, int i, int j) {
+        arr[i] = (char) (arr[i] ^ arr[j] ^ (arr[j] = arr[i]));
+    }
+
+    private void permutate(char[] s, int left, int right, List<String> results) {
         if(left == right) {
-            results.add(s);
+            results.add(String.valueOf(s));
         }
         else {
             for(int i = left; i <= right; i++) {
-                permutate(swap(s, left, i), left + 1, right, results);
+                swap(s, left, i);
+                permutate(s, left + 1, right, results);
+                swap(s, i, left);
             }
         }
     }
 
-    String swap(String s, int i, int j) {
-        char temp;
-        char[] arr = s.toCharArray();
-        temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
-        return String.valueOf(arr);
-    }
-
-
     List<String> getPermutations(String s) {
         List<String> results = new ArrayList<>();
-        permutate(s, 0, s.length() - 1, results);
+        permutate(s.toCharArray(), 0, s.length() - 1, results);
         return results;
     }
 
