@@ -1,24 +1,24 @@
-package org.interview;
+package org.interview.leetcode;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PartitionLabels {
 
-    List<Integer> doPartition(String input) {
+    List<Integer> doPartition(String S) {
         List<Integer> results = new ArrayList<>();
         int[] lastIndex = new int[26];
 
-        for(int i =0; i < input.length(); i++) {
-            lastIndex[input.charAt(i) - 'a'] = i;
+        for(int i =0; i < S.length(); i++) {
+            lastIndex[S.charAt(i) - 'a'] = i;
         }
 
         int i = 0;
-        while(i < input.length()) {
-            int end = lastIndex[input.charAt(i) - 'a'];
+        while(i < S.length()) {
+            int end = lastIndex[S.charAt(i) - 'a'];
             int j = i+ 1;
             while(j != end) {
-                end = Math.max(end, lastIndex[input.charAt(j++) - 'a']);
+                end = Math.max(end, lastIndex[S.charAt(j++) - 'a']);
             }
             results.add(j - i + 1);
             i = j + 1;
@@ -29,9 +29,9 @@ public class PartitionLabels {
 
     static public void main(String[] args) {
         String label = "ababcbacadefegdehijhklij";
+        String label2 = "caedbdedda";
 
         PartitionLabels o = new PartitionLabels();
-        List<Integer> results = o.doPartition(label);
+        o.doPartition(label2).stream().forEach(System.out::println);
     }
-
 }
