@@ -45,8 +45,6 @@ public class ArrayQuiz {
 
     static void swapLeft(int[]arr, int swaps) {
         int last = arr.length - 1;
-
-
         for(int k = 0; k < swaps; k++) {
             int pivot = arr[0];
             for (int i = 0, j = i + 1; i < last; i++, j++) {
@@ -75,7 +73,7 @@ public class ArrayQuiz {
     }
 
 
-    //Difference array solution sloved int O(n) instead of O(n*m)
+    //Difference array solution solved int O(n) instead of O(n*m)
     long addToArray(int n, int[][] queries) {
         long[] zeroes = new long[n];
         int rows = queries.length;

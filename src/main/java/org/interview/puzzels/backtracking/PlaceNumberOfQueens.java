@@ -47,7 +47,7 @@ public class PlaceNumberOfQueens {
                 ld = rd = column[i] = 1;
                 System.out.printf("Moving foward col: %d N: %d queens.\n", col, N);
                 printSolution(board, N);
-                if(solveNQueens(board, col + 1, N)) {
+                if(solveNQueensOpt(board, col + 1, N)) {
                     return true;
                 }
                 board[i][col] = 0;
