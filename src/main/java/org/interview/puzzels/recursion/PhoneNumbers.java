@@ -6,8 +6,7 @@ import java.util.List;
 
 public class PhoneNumbers {
 
-    private static String[] mappings = {"abc", "def", "ghi", "jkl", "mno",
-            "pqrs", "tuv", "wxyz"};
+    private static String[] mappings = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
 
     List<String> getLetterCombinations(String numbers) {
         List<String> results = new LinkedList<>();
