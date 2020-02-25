@@ -10,6 +10,9 @@ public class LetterCombinationsPhoneNumber {
 
     static public List<String> letterCombinations(String digits) {
         List<String> combinations = new ArrayList<>();
+        if(digits == null || digits.isEmpty()) {
+            return combinations;
+        }
 
         List<String> buttons = new ArrayList<>();
         for(char c : digits.toCharArray()) {
@@ -20,11 +23,11 @@ public class LetterCombinationsPhoneNumber {
             buttons.add(letters[number - 2]);
         }
 
-        getCombinationIt(buttons, 0, 0, "", combinations);
+        getCombinationRecursive(buttons, 0, 0, "", combinations);
         return combinations;
     }
 
-    static void getCombinationIt(List<String> buttons, int current, int index, String combination, List<String> combinations) {
+    static void getCombinationRecursive(List<String> buttons, int current, int index, String combination, List<String> combinations) {
         if (current >= buttons.size()) {
             combinations.add(combination.toString());
             return;
@@ -32,14 +35,14 @@ public class LetterCombinationsPhoneNumber {
 
         String button = buttons.get(current);
         for(int i = index; i < button.length(); i++) {
-            getCombinationIt(buttons, current + 1, 0, combination + button.charAt(i), combinations);
+            getCombinationRecursive(buttons, current + 1, 0, combination + button.charAt(i), combinations);
         }
      }
 
 
     static Consumer<String> printString = (s) -> System.out.printf("%s, ", s);
     public static void main(String[] args) {
-        letterCombinations("27").stream().forEach(printString);
+        letterCombinations("2").stream().forEach(printString);
         System.out.println();
     }
 }

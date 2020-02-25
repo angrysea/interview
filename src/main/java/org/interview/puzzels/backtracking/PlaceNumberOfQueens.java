@@ -35,21 +35,23 @@ public class PlaceNumberOfQueens {
             return true;
         }
 
-        int []ld = new int[30];
-        int []rd = new int[30];
-        int []cl = new int[30];
+        int []leftDiagonal = new int[N];
+        int []rightDiagonal = new int[N];
+        int []column = new int[N];
 
         for(int i = 0; i < N; i++) {
-            if ((ld[i - col + N - 1] != 1 && rd[i + col] != 1) && cl[i] != 1) {
+            int ld = leftDiagonal[i - col + N - 1];
+            int rd = rightDiagonal[i + col];
+            if ((ld != 1 && rd != 1) && column[i] != 1) {
                 board[i][col] = 1;
-                ld[i - col + N - 1] = rd[i + col] = cl[i] = 1;
+                ld = rd = column[i] = 1;
                 System.out.printf("Moving foward col: %d N: %d queens.\n", col, N);
                 printSolution(board, N);
                 if(solveNQueens(board, col + 1, N)) {
                     return true;
                 }
                 board[i][col] = 0;
-                ld[i - col + N - 1] = rd[i + col] = cl[i] = 0;
+                ld = rd = column[i] = 0;
                 System.out.printf("Backtracking col: %d N: %d queens.\n", col, N);
                 printSolution(board, N);
             }
