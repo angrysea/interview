@@ -132,7 +132,8 @@ public class BinaryTree {
         System.out.println();
     }
 
-    private void printLevelOrderTraversal() {
+    private void
+    printLevelOrderTraversal() {
         List<List<BinaryTreeNode>> levelOrder = new ArrayList<>();
         Queue<BinaryTreeNode> currentLevel = new LinkedList<>();
         currentLevel.add(root);
