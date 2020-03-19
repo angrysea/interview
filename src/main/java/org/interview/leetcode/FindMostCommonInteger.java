@@ -34,7 +34,7 @@ public class FindMostCommonInteger {
         }
     }
 
-    void findSumsOfN2(int[] arr, int n) {
+    void findSumsOfNTwo(int[] arr, int n) {
         int start = 0, end = arr.length - 1;
         Arrays.sort(arr);
         while(start <= arr.length / 2) {
@@ -59,6 +59,6 @@ public class FindMostCommonInteger {
         int[] arr = new int[] { 1,2,3,57,3};
         System.out.println(o.findMostCommon(arr));
         arr = new int[] {1,9,1,5,5};
-        o.findSumsOfN2(arr, 10);
+        o.findSumsOfNTwo(arr, 10);
     }
 }

@@ -2,35 +2,51 @@ package org.interview.leetcode;
 
 public class LargestSurrounded {
     int [][] m = new int[][] {{0, 1}, {0,-1}, {1,0}, {-1,0}};
-    int findLargestSurrounded(char[][] matrix) {
-        boolean[][] visited = new boolean[matrix.length][matrix[0].length];
-        return dfs(matrix, visited, 0, 0);
-    }
-
-    int dfs(char[][] matrix, boolean[][] visited, int row, int col) {
-        if(row < 0 || col < 0 || row >= matrix.length || col >= matrix[0].length
-        || visited[row][col] == true) {
+    int maxAreaOfIsland(int[][] grid) {
+        if (grid == null) {
             return 0;
         }
-
-        visited[row][col] = true;
-        for(int i = 0; i < m.length; i++) {
-            dfs(matrix, visited, row + m[i][0], col + m[i][1]);
+        int max = 0;
+        for(int row = 0; row < grid.length; row++) {
+            for(int col = 0; col < grid[row].length; col++) {
+                if (grid[row][col] == 1) {
+                    max = Math.max(max, dfs(grid, row, col, 0));
+                }
+            }
         }
-        return 0;
+        return max;
+    }
+
+    int dfs(int[][] grid, int row, int col, int max) {
+        if(row < 0 || col < 0 || row >= grid.length || col >= grid[0].length || grid[row][col] != 1) {
+            return max;
+        }
+
+        max++;
+        grid[row][col] = 0;
+
+        if (row == 1 && col > 6) {
+            System.out.println();
+        }
+        for(int i = 0; i < m.length; i++) {
+            max = dfs(grid,row + m[i][0], col + m[i][1], max);
+        }
+        return max;
     }
 
     public static void main(String[] args) {
-        char[][] matrix = new char[][] {
-                {'X', 'O', 'X', 'X', 'X', 'X'},
-                {'X', 'O', 'X', 'X', 'O', 'X'},
-                {'X', 'X', 'X', 'O', 'O', 'X'},
-                {'O', 'X', 'X', 'X', 'X', 'X'},
-                {'X', 'X', 'X', 'O', 'X', 'O'},
-                {'O', 'O', 'X', 'O', 'O', 'O'}
+        int[][] matrix = {
+                {0,0,1,0,0,0,0,1,0,0,0,0,0},
+                {0,0,0,0,0,0,0,1,1,1,0,0,0},
+                {0,1,1,0,1,0,0,0,0,0,0,0,0},
+                {0,1,0,0,1,1,0,0,1,0,1,0,0},
+                {0,1,0,0,1,1,0,0,1,1,1,0,0},
+                {0,0,0,0,0,0,0,0,0,0,1,0,0},
+                {0,0,0,0,0,0,0,1,1,1,0,0,0},
+                {0,0,0,0,0,0,0,1,1,0,0,0,0}
         };
 
         LargestSurrounded o = new LargestSurrounded();
-        System.out.println(o.findLargestSurrounded(matrix));
+        System.out.println(o.maxAreaOfIsland(matrix));
     }
 }

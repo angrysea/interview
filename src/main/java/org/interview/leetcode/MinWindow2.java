@@ -36,7 +36,6 @@ public class MinWindow2 {
                 }
 
                 windowMapping.put(leftChar, windowMapping.get(leftChar) - 1);
-                boolean leftCharIsARequirement = requiredCharacters.containsKey(leftChar);
                 if (requiredCharacters.containsKey(leftChar) &&
                         windowMapping.get(leftChar).intValue() < requiredCharacters.get(leftChar).intValue()) {
                     charInWindowToMatch--;

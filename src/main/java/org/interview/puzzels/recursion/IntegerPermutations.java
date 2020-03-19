@@ -1,26 +1,25 @@
 package org.interview.puzzels.recursion;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class IntegerPermutations {
-    public List<int[]> permute(int[] nums) {
+    public List<int[]> permutations(int[] nums) {
         List<int[]> results = new ArrayList<>();
-        permutate(nums, 0, nums.length - 1, results);
+        permutation(nums, 0, nums.length - 1, results);
         return results;
     }
 
-    private void permutate(int[] arr, int left, int right, List<int[]> results) {
+    private void permutation(int[] arr, int left, int right, List<int[]> results) {
         if(left == right) {
-            int[] premutation = new int[arr.length];
-            System.arraycopy(arr, 0, premutation, 0, arr.length);
-            results.add(premutation);
+            int[] permutation = new int[arr.length];
+            System.arraycopy(arr, 0, permutation, 0, arr.length);
+            results.add(permutation);
         }
         else {
             for(int i = left; i <= right; i++) {
                 swap(arr, i, left);
-                permutate(arr, left + 1, right, results);
+                permutation(arr, left + 1, right, results);
                 swap(arr, left, i);
             }
         }
@@ -33,7 +32,7 @@ public class IntegerPermutations {
 
     public static void main(String[] args) {
         IntegerPermutations o = new IntegerPermutations();
-        o.permute(new int[]{1,2,3,4}).stream().forEach( arr -> {
+        o.permutations(new int[]{1,2,3,4}).stream().forEach( arr -> {
             for(int i : arr) {
                 System.out.printf("%d, ", i);
             }

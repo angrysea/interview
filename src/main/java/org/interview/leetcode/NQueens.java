@@ -39,10 +39,10 @@ public class NQueens {
     void computeOutput(boolean[][] dp, List<List<String>> output, int n) {
         List<String> results = new ArrayList<>();
         int count = 0;
-        for (int j = 0; j < n; j++) {
+        for (int row = 0; row < n; row++) {
             StringBuilder queens = new StringBuilder();
-            for (int k = 0; k < n; k++) {
-                if (dp[j][k]) {
+            for (int col = 0; col < n; col++) {
+                if (dp[row][col]) {
                     queens.append('Q');
                     count++;
                 } else {
@@ -61,13 +61,13 @@ public class NQueens {
             return true;
         }
 
-        for (int i = 0; i < n; i++) {
-            if (isSafe(board, i, col, n)) {
-                board[i][col] = true;
+        for (int row = 0; row < n; row++) {
+            if (isSafe(board, row, col, n)) {
+                board[row][col] = true;
                 if (solveTheBoard(board,col + 1, output, n)) {
                     computeOutput(board, output, n);
                 }
-                board[i][col] = false;
+                board[row][col] = false;
             }
         }
         return false;

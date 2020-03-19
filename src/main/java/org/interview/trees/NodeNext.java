@@ -84,6 +84,9 @@ public class NodeNext {
             }
         }
         else {
+            if (parent == null) {
+                return null;
+            }
             if(this.parent.left == this) {
                 next = this.parent;
             }
